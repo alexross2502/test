@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Box, Button, TextField, Typography } from "@mui/material";
 
 const style = {
@@ -21,6 +21,32 @@ const ModalForm = () => {
   const [error, setError] = useState("");
   const [isLocked, setIsLocked] = useState(false);
   const [buttonText, setButtonText] = useState("Отправить ответ");
+  const [modalStyle, setModalStyle] = useState({
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -70%)", // Начальная позиция за пределами экрана сверху
+    opacity: 0, // Скрыть модалку изначально
+    transition: "transform 0.5s ease, opacity 0.5s ease", // Плавная анимация
+  });
+
+  useEffect(() => {
+    // После монтирования, запускаем анимацию
+    setModalStyle({
+      position: "relative",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "80%",
+      maxWidth: "500px",
+      bgcolor: "background.paper",
+      boxShadow: 24,
+      p: 4,
+      overflow: "hidden",
+      margin: 0,
+      opacity: 1, // Модалка становится видимой
+      transition: "transform 0.5s ease, opacity 0.5s ease", // Плавная анимация
+    });
+  }, []);
 
   const handleAnswerChange = (event) => {
     setAnswer(event.target.value);
@@ -78,24 +104,7 @@ const ModalForm = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          sx={{
-            position: "relative",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "80%",
-            maxWidth: "500px",
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            overflow: "hidden",
-            margin: 0,
-            overflow: "hidden",
-            opacity: 0, // Скрываем до момента анимации
-            transition: "transform 0.5s ease, opacity 0.5s ease", // Плавная анимация
-          }}
-        >
+        <Box sx={modalStyle}>
           <Typography
             id="modal-modal-title"
             variant="h6"
