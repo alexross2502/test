@@ -16,7 +16,7 @@ const style = {
 };
 
 const ModalForm = () => {
-  const [question, setQuestion] = useState("Введите ваш вопрос здесь");
+  const [question, setQuestion] = useState("Вы человек?");
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
   const [isLocked, setIsLocked] = useState(false);
