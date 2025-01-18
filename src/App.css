@@ -1,0 +1,23 @@
+.App {
+  background-image: url("./background.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .background {
+    background-image: url("./background.jpg");
+  }
+}
