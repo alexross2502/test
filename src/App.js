@@ -1,10 +1,14 @@
+import { useState } from "react";
 import "./App.css";
+import FirstModal from "./FirstModal";
 import ModalForm from "./ModalForm";
 
 function App() {
+  const [firstModal, setFirstModal] = useState(true);
   return (
     <div className="App">
-      <ModalForm />
+      {firstModal && <FirstModal setFirstModal={setFirstModal} />}
+      {!firstModal && <ModalForm />}
     </div>
   );
 }
