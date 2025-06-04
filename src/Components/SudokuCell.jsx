@@ -1,20 +1,45 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
-function SudokuCell({ value, readonly, onChange }) {
+function SudokuCell({ value, readonly, correctValue, onChange }) {
+  useEffect(() => {
+    document.activeElement.blur();
+  }, [readonly]);
+
+  const [isInvalid, setIsInvalid] = useState(false);
+
+  const handleChange = (e) => {
+    if (readonly) return;
+
+    const val = e.target.value;
+
+    if (/^[1-9]?$/.test(val)) {
+      onChange(val);
+      if (val === "" || Number(val) === correctValue) {
+        setIsInvalid(false);
+      } else {
+        setIsInvalid(true);
+        document.activeElement.blur();
+      }
+    }
+  };
+
+  const handleFocus = () => {
+    if (!readonly && value !== "") {
+      setIsInvalid(false);
+      onChange("");
+    }
+  };
+
   return (
     <input
       type="text"
-      className={`sudoku-cell ${readonly ? "locked correct" : ""}`}
+      className={`sudoku-cell ${readonly ? "locked correct" : ""} ${
+        isInvalid ? "incorrect" : ""
+      }`}
       value={value ?? ""}
-      onChange={(e) => {
-        if (readonly) return;
-        console.log(e);
-        const val = e.target.value;
-        if (/^[1-9]?$/.test(val)) {
-          onChange(val);
-        }
-      }}
+      onChange={handleChange}
       readOnly={readonly}
+      onFocus={handleFocus}
       tabIndex={readonly ? -1 : 0}
     />
   );

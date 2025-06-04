@@ -24,6 +24,8 @@ body {
   font-size: 24px;
   text-align: center;
   outline: none;
+  caret-color: transparent;
+  cursor: pointer;
 }
 
 .sudoku-cell.correct {
@@ -38,7 +40,8 @@ body {
 
 .sudoku-cell:focus {
   border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.6);
+  box-shadow: 5px 5px 5px rgba(0, 123, 255, 0.6);
+  background-color: #c3dffd;
 }
 
 /* все поле*/
@@ -67,4 +70,74 @@ body {
 
 .border-bottom {
   border-bottom: 2px solid black;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5px, 0);
+  }
+  20% {
+    transform: translate(5px, 0);
+  }
+  30% {
+    transform: translate(-5px, 0);
+  }
+  40% {
+    transform: translate(5px, 0);
+  }
+  50% {
+    transform: translate(-5px, 0);
+  }
+  60% {
+    transform: translate(5px, 0);
+  }
+  70% {
+    transform: translate(-5px, 0);
+  }
+  80% {
+    transform: translate(5px, 0);
+  }
+  90% {
+    transform: translate(-5px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.shake {
+  animation: shake 2s ease-in-out;
+}
+
+/* крестик и галочка*/
+.icon {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.checkmark {
+  color: green;
+}
+
+.crossmark {
+  color: red;
+}
+
+/*overlay*/
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  background: rgba(255, 255, 255, 0);
+  pointer-events: all;
 }
