@@ -1,58 +1,52 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import SudokuCell from "./SudokuCell";
 import { generateSudokuPuzzle } from "../utils/SudokuUtils";
-const { puzzle, solution } = generateSudokuPuzzle();
 
 function SudokuBoard() {
-  const [userValues, setUserValues] = useState(Array(81).fill(""));
+  const { puzzle, solution } = generateSudokuPuzzle();
 
-  const handleCellChange = (index, value) => {
-    if (value === "" || /^[1-9]$/.test(value)) {
-      const newValues = [...userValues];
-      newValues[index] = value;
-      setUserValues(newValues);
-    }
+  const [board, setBoard] = useState(puzzle);
+
+  const [locked, setLocked] = useState(puzzle.map((val) => val !== null));
+
+  const handleCellChange = (index, val) => {
+    const numVal = val === "" ? null : Number(val);
+
+    const newBoard = [...board];
+    newBoard[index] = numVal;
+
+    const isCorrect = numVal === solution[index];
+
+    const newLocked = [...locked];
+    newLocked[index] = isCorrect || puzzle[index] !== null;
+
+    setBoard(newBoard);
+    setLocked(newLocked);
   };
 
   const cells = [];
 
-  for (let row = 0; row < 9; row++) {
-    for (let col = 0; col < 9; col++) {
-      const index = row * 9 + col;
-      const key = `${row}-${col}`;
+  for (let i = 0; i < 81; i++) {
+    const row = Math.floor(i / 9);
+    const col = i % 9;
 
-      const cellClass = [
-        "cell-wrapper",
-        row % 3 === 0 ? "border-top" : "",
-        col % 3 === 0 ? "border-left" : "",
-        row === 8 ? "border-bottom" : "",
-        col === 8 ? "border-right" : "",
-      ].join(" ");
+    const cellClass = [
+      "cell-wrapper",
+      row % 3 === 0 ? "border-top" : "",
+      col % 3 === 0 ? "border-left" : "",
+      row === 8 ? "border-bottom" : "",
+      col === 8 ? "border-right" : "",
+    ].join(" ");
 
-      const cellValue = puzzle[index];
-      const isReadOnly = cellValue !== null;
-
-      const userInputValue = userValues[index];
-
-      let validationState = null;
-
-      if (!isReadOnly && userInputValue !== "") {
-        validationState =
-          Number(userInputValue) === solution[index] ? "correct" : "incorrect";
-      }
-
-      cells.push(
-        <div key={key} className={cellClass}>
-          <SudokuCell
-            value={isReadOnly ? cellValue.toString() : userInputValue}
-            readonly={isReadOnly}
-            validationState={validationState}
-            onChange={(val) => handleCellChange(index, val)}
-          />
-        </div>
-      );
-    }
+    cells.push(
+      <div key={i} className={cellClass}>
+        <SudokuCell
+          value={board[i]}
+          readonly={locked[i]}
+          onChange={(val) => handleCellChange(i, val)}
+        />
+      </div>
+    );
   }
 
   return <div className="sudoku-board">{cells}</div>;
