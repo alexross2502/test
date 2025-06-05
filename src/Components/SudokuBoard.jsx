@@ -57,6 +57,8 @@ function SudokuBoard({ setCount, setIsWon }) {
               setValid(isCorrect);
 
               if (isCorrect) {
+                console.log(puzzle.filter(item => item === null).length)
+                //setIsWon(true)
                 correctSound.currentTime = 0;
                 correctSound.play();
               } else {
