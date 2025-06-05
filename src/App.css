@@ -176,3 +176,8 @@ body {
   margin-bottom: 50px;
   font-size: 30px;
 }
+
+/*selectedNumber*/
+.selectedNumber {
+  background-color: grey !important
+}

@@ -13,7 +13,13 @@ function SudokuBoard({ setCount, setIsWon }) {
   const [isValid, setValid] = useState(null);
   const [isShake, setShake] = useState(false);
   const [blankCell, setBlankCell] = useState(puzzle.filter(item => item === null).length)
+  const [selectedNumber, setSelectedNumber] = useState(false)
   const timeoutRef = useRef(null);
+
+  const sameNumbersHandler = (index, value) => {
+    value !== null ? setSelectedNumber(value) : setSelectedNumber(false)
+  }
+
 
    useEffect(()=>{
     if(blankCell === 0){
@@ -51,6 +57,9 @@ function SudokuBoard({ setCount, setIsWon }) {
         <div key={i} className={cellClass}>
           <SudokuCell
             value={val}
+            index={i}
+            selectedNumber={selectedNumber}
+            sameNumbersHandler={sameNumbersHandler}
             readonly={readOnly || locked[i]}
             correctValue={solution[i]}
             onChange={(inputVal) => {

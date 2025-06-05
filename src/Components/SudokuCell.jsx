@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-function SudokuCell({ value, readonly, correctValue, onChange }) {
+function SudokuCell({ value, readonly, correctValue, onChange, index, sameNumbersHandler, selectedNumber }) {
   useEffect(() => {
     document.activeElement.blur();
   }, [readonly]);
@@ -25,8 +25,12 @@ function SudokuCell({ value, readonly, correctValue, onChange }) {
 
   const handleFocus = () => {
     if (!readonly && value !== "") {
+      sameNumbersHandler(index, null)
       setIsInvalid(false);
       onChange("");
+    }
+    if(readonly){
+      sameNumbersHandler(index, value)
     }
   };
 
@@ -35,7 +39,7 @@ function SudokuCell({ value, readonly, correctValue, onChange }) {
       type="text"
       className={`sudoku-cell ${readonly ? "locked correct" : ""} ${
         isInvalid ? "incorrect" : ""
-      }`}
+      } ${selectedNumber === value ? "selectedNumber" : ""}`}
       value={value ?? ""}
       onChange={handleChange}
       readOnly={readonly}
