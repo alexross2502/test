@@ -170,3 +170,9 @@ body {
     transform: translateY(0);
   }
 }
+
+/*mistake*/ 
+.mistake {
+  margin-bottom: 50px;
+  font-size: 30px;
+}

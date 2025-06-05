@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SudokuCell from "./SudokuCell";
 import { generateSudokuPuzzle } from "../utils/SudokuUtils";
 import ValidationIcon from "./ValidationIcon";
@@ -12,7 +12,14 @@ function SudokuBoard({ setCount, setIsWon }) {
   const [locked, setLocked] = useState(puzzle.map((val) => val !== null));
   const [isValid, setValid] = useState(null);
   const [isShake, setShake] = useState(false);
+  const [blankCell, setBlankCell] = useState(puzzle.filter(item => item === null).length)
   const timeoutRef = useRef(null);
+
+   useEffect(()=>{
+    if(blankCell === 0){
+      setIsWon(true)
+    }
+  }, [blankCell])
 
   const handleCellChange = (index, val) => {
     const numVal = val === "" ? null : Number(val);
@@ -57,8 +64,7 @@ function SudokuBoard({ setCount, setIsWon }) {
               setValid(isCorrect);
 
               if (isCorrect) {
-                console.log(puzzle.filter(item => item === null).length)
-                //setIsWon(true)
+                setBlankCell(blankCell - 1)
                 correctSound.currentTime = 0;
                 correctSound.play();
               } else {
@@ -87,10 +93,10 @@ function SudokuBoard({ setCount, setIsWon }) {
         {renderBoard(board, false)}
       </div>
 
-      {/* Вторая доска с ответами */}
-      <div className="sudoku-board solved-board">
+      
+      {/* <div className="sudoku-board solved-board">
         {renderBoard(solution, true)}
-      </div>
+      </div> */}
 
       {isValid === false && <ValidationIcon isValid={isValid} />}
       {isValid === false && <div className="overlay" />}
