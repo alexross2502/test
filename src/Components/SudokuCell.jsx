@@ -49,7 +49,7 @@ function SudokuCell({
       className={`sudoku-cell ${readonly ? "locked correct" : ""} ${
         isInvalid ? "incorrect" : ""
       } ${selectedNumber === value ? "selectedNumber" : ""} ${
-        selectedLines.include(index) ? "selectedLines" : ""
+        selectedLines.includes(index) ? "selectedLines" : ""
       }`}
       value={value ?? ""}
       onChange={handleChange}

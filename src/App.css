@@ -28,10 +28,10 @@ body {
   cursor: pointer;
 }
 
-.sudoku-cell.correct {
+/* .sudoku-cell.correct {
   border-color: green;
   background-color: #d4f8d4;
-}
+} */
 
 .sudoku-cell.incorrect {
   border-color: red;
@@ -184,5 +184,5 @@ body {
 
 /*selectedLines*/
 .selectedLines {
-  background-color: rgb(216, 215, 215) !important;
+  background-color: rgb(232, 232, 232);
 }

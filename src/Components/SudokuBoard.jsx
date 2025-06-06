@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import SudokuCell from "./SudokuCell";
-import { generateSudokuPuzzle } from "../utils/SudokuUtils";
+import { generateSudokuPuzzle } from "../utils/sudokuUtils";
 import ValidationIcon from "./ValidationIcon";
+import { linesUtil } from "../utils/linesUtil";
 
 const { puzzle, solution } = generateSudokuPuzzle();
 const correctSound = new Audio("/sounds/done.mp3");
@@ -21,6 +22,7 @@ function SudokuBoard({ setCount, setIsWon }) {
 
   const sameNumbersHandler = (index, value) => {
     value !== null ? setSelectedNumber(value) : setSelectedNumber(false);
+    value !== null ? setSelectedLines(linesUtil(index)) : setSelectedLines([])
   };
 
   useEffect(() => {
