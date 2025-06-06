@@ -12,20 +12,22 @@ function SudokuBoard({ setCount, setIsWon }) {
   const [locked, setLocked] = useState(puzzle.map((val) => val !== null));
   const [isValid, setValid] = useState(null);
   const [isShake, setShake] = useState(false);
-  const [blankCell, setBlankCell] = useState(puzzle.filter(item => item === null).length)
-  const [selectedNumber, setSelectedNumber] = useState(false)
+  const [blankCell, setBlankCell] = useState(
+    puzzle.filter((item) => item === null).length
+  );
+  const [selectedNumber, setSelectedNumber] = useState(false);
+  const [selectedLines, setSelectedLines] = useState([]);
   const timeoutRef = useRef(null);
 
   const sameNumbersHandler = (index, value) => {
-    value !== null ? setSelectedNumber(value) : setSelectedNumber(false)
-  }
+    value !== null ? setSelectedNumber(value) : setSelectedNumber(false);
+  };
 
-
-   useEffect(()=>{
-    if(blankCell === 0){
-      setIsWon(true)
+  useEffect(() => {
+    if (blankCell === 0) {
+      setIsWon(true);
     }
-  }, [blankCell])
+  }, [blankCell]);
 
   const handleCellChange = (index, val) => {
     const numVal = val === "" ? null : Number(val);
@@ -59,6 +61,7 @@ function SudokuBoard({ setCount, setIsWon }) {
             value={val}
             index={i}
             selectedNumber={selectedNumber}
+            selectedLines={selectedLines}
             sameNumbersHandler={sameNumbersHandler}
             readonly={readOnly || locked[i]}
             correctValue={solution[i]}
@@ -73,7 +76,7 @@ function SudokuBoard({ setCount, setIsWon }) {
               setValid(isCorrect);
 
               if (isCorrect) {
-                setBlankCell(blankCell - 1)
+                setBlankCell(blankCell - 1);
                 correctSound.currentTime = 0;
                 correctSound.play();
               } else {
@@ -102,7 +105,6 @@ function SudokuBoard({ setCount, setIsWon }) {
         {renderBoard(board, false)}
       </div>
 
-      
       {/* <div className="sudoku-board solved-board">
         {renderBoard(solution, true)}
       </div> */}

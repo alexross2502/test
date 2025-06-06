@@ -171,7 +171,7 @@ body {
   }
 }
 
-/*mistake*/ 
+/*mistake*/
 .mistake {
   margin-bottom: 50px;
   font-size: 30px;
@@ -179,5 +179,10 @@ body {
 
 /*selectedNumber*/
 .selectedNumber {
-  background-color: grey !important
+  background-color: rgb(173, 172, 172) !important;
+}
+
+/*selectedLines*/
+.selectedLines {
+  background-color: rgb(216, 215, 215) !important;
 }
